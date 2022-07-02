@@ -5,7 +5,7 @@ const port = 5000;
 // middlewareWrapper
 app.use(cors());
 app.use(express.json())
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const uri = "mongodb+srv://todo:vuH1w4pIaHR7jXde@cluster0.zavli.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -30,8 +30,10 @@ async function  run(){
         })
 
         app.delete('/list/:id', async(req, res)=>{
-            const id = req.body.id;
-            const query = {_id: ObjectId(id)};
+            const id = req.params.id;
+           // console.log(id);
+            const query = { _id:ObjectId(id)};
+           // console.log(query);
             const result = await collection.deleteOne(query);
             res.send(result);
         })

@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 var cors = require('cors')
-const port = 6000;
+const port = 5000;
 // middlewareWrapper
 app.use(cors());
 app.use(express.json())
@@ -26,6 +26,13 @@ async function  run(){
         app.post('/lists', async(req, res) => {
             const data = req.body;
             const result = await collection.insertOne(data);
+            res.send(result);
+        })
+
+        app.delete('/list/:id', async(req, res)=>{
+            const id = req.body.id;
+            const query = {_id: ObjectId(id)};
+            const result = await collection.deleteOne(query);
             res.send(result);
         })
 
